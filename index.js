@@ -1,12 +1,19 @@
-var app = require('express')();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+// var app = require('express')();
+// const http = require('http').createServer(app);
 
 
-app.get('/', function(req, res){
-  // res.send('<h1>Hello world</h1>');
-  res.sendFile(__dirname + '/index.html');
-});
+const PORT = process.env.PORT || 3000;
+const INDEX = '/index.html';
+
+const app = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+const io = require('socket.io')(http);
+
+// app.get('/', function(req, res){
+//   res.sendFile(__dirname + '/index.html');
+// });
 
 io.on("connection", function(socket){
   io.emit('newuser');
@@ -24,4 +31,4 @@ io.on("connection", function(socket){
 //   console.log('listening on *:3000');
 // });
 
-app.listen(process.env.PORT || 3000);
+// app.listen(process.env.PORT || 3000);
