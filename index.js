@@ -9,7 +9,7 @@ const app = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-const io = require('socket.io')(http);
+  const io = socketIO(server);
 
 // app.get('/', function(req, res){
 //   res.sendFile(__dirname + '/index.html');
