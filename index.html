@@ -39,6 +39,9 @@
        socket.on('newuser', function(){
         $('#messages').append($('<li>').text("a new user connected"));
        });
+       socket.on('userleft', function(){
+        $('#messages').append($('<li>').text("a user has left"));
+       });
       });
     </script>
    
