@@ -4,8 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Button, Text, View } from 'react-native';
 // import DeviceInfo from 'react-native-device-info';
+import socketIO from 'socket.io-client';
+const config = require('./config.json');
 
 const Stack = createStackNavigator();
+
+
 
 function HomeScreen({ navigation }) {
   return (
@@ -29,7 +33,20 @@ function ChatScreen() {
 
 
 
-export default function App() {
+export default class App extends React.Component {
+
+  componentDidMount() { 
+    const socket = socketIO(config.SERVER_URL, {      
+    transports: ['websocket'], jsonp: false });   
+    socket.connect(); 
+    socket.on('connect', () => { 
+      console.log('connected to socket server'); 
+    }); 
+
+    
+  }
+
+  render(){
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
@@ -39,7 +56,7 @@ export default function App() {
       </NavigationContainer>
     );
   }
-
+}
 
 const styles = StyleSheet.create({
   container: {
